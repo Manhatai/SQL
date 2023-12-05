@@ -26,5 +26,52 @@ INSERT INTO listprice(name, is_active, price)
 VALUES('hostel-room', False, 50);
 
 
+Dzień 2:
+Lekcja 3:
+
+Ogólne wybieranie rekordów, czyli wprowadzenie do SELECT, WHERE, LIKE, AND OR NOT, DISTINCT, LIMIT i OFFSET, ORDER BY
+
+Ważne komendy:
+- (przykładowe zapytanie do bazy danych SELECT):
+SELECT
+	c.first_name AS "FIRST NAME"
+	, c.last_name AS "LAST NAME"   -- AS jest opcjonalne
+	, c.email AS "E-MAIL"
+FROM customer AS c
+
+
+- (przykładowe zapytanie do bazy danych WHERE):
+SELECT
+	*
+FROM customer AS c
+WHERE c.create_date >= '2006-02-14'
+
+
+- (przykładowe zapytanie do bazy danych LIKE):
+SELECT
+	*
+FROM customer AS c
+WHERE c.last_name LIKE '%x%'
+
+- (przykładowe zapytanie do bazy danych AND OR NOT):
+SELECT
+	*
+FROM customer AS c
+WHERE c. store_id = 1 AND NOT (c.first_name LIKE 'J%' OR c.last_name LIKE 'R%')
+
+
+- (przykładowe zapytanie do bazy danych DISTINCT)
+SELECT DISTINCT category, price FROM film_list
+
+- (przykładowe zapytanie do bazy danych LIMIT i OFFSET)
+SELECT
+	f.fid
+	, f.title
+	, f.category
+	, f.length
+FROM film_list AS f
+LIMIT 10 OFFSET 30
+
+- (przykładowe zapytanie do bazy danych ORDER BY)
 
 """
