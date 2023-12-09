@@ -154,4 +154,89 @@ Dzień 4:
 Lekcja 5:
 
 Typy, funkcje i NULL
+
+Ważne komendy:
+- (korzystanie z funkcji obliczeń:)
+SELECT
+	title
+	, price
+	, length AS length_in_mins
+	, round(length / 60.0, 2) AS in_hours
+	, round(price / (length / 60.0), 2) AS price_per_hour
+FROM film_list
+WHERE round(price / (length / 60.0), 2) >= 6
+ORDER BY price_per_hour
+
+
+- (NULL:)
+--SELECT
+--	COUNT(*)
+--FROM rental
+--WHERE return_date IS NULL
+--ORDER BY return_date DESC
+
+--CREATE TEMPORARY TABLE numbers
+--(number INTEGER NULL)
+
+--INSERT INTO numbers VALUES (10), (20), (30), (NULL)
+
+--SELECT AVG(number) FROM numbers
+
+--DROP TABLE numbers
+
+SELECT
+	COUNT(DISTINCT customer_id) AS count_of_customers
+FROM rental
+
+
+- (COALESCE:)
+SELECT
+	rental_date
+	, customer_id
+	, return_date
+	, CASE
+		WHEN return_date IS NULL THEN 'UNKNOWN'
+		ELSE CAST(return_date AS CHAR(10))
+	END AS description
+	, COALESCE(CAST(return_date AS CHAR(10)), 'UNKNOWN') AS description_2
+FROM rental
+WHERE rental_date >= '2005-08-23 22:26:47'
+ORDER BY rental_date
+
+- (funkcje testowe:)
+SELECT
+	UPPER(title) AS film_title
+	, description
+	, category
+	, length
+	, REPEAT('*', length / 10) AS duration
+	, CONCAT(TRIM(title), ' (', category, ')') AS title_with_category
+	, UPPER(SUBSTRING(category FROM 1 FOR 2))
+	, RIGHT(UPPER(category), 2)
+	, REVERSE(RIGHT(UPPER(category), 2))
+	, LENGTH(description)
+	, POSITION('amazing' IN LOWER(description))
+FROM film_list
+where POSITION('amazing' IN LOWER(description)) > 0
+
+- (funkcje daty i czasu:)
+--SELECT NOW()::TIME, CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_TIME
+SELECT
+	r.rental_date
+	, r.return_date
+	, (r.rental_date + INTERVAL '3 MONTHS')::DATE AS expected_return
+	, AGE(r.return_date, r.rental_date) AS duration
+	, DATE '2030-05-01'
+FROM rental r
+
+- (przegląd typów danych:)
+
+
+
+
+
+
+
+
+
 """
