@@ -236,6 +236,53 @@ FROM rental r
 
 
 
+Dzień 5:
+Lekcja 6:
+
+Pisanie zapytań do wielu tabel
+
+
+- (relacje w relacyjnej bazie danych:)
+--SELECT * FROM customer
+--SELECT * FROM address WHERE address_id = 5
+--SELECT * FROM city WHERE city_id = 463
+SELECT * FROM country WHERE country_id = 50
+
+- (złączenie tabel przez INNER JOIN)
+SELECT
+	c.first_name, c.last_name,
+	a.address, a.district,
+	ci.city, co.country
+FROM customer AS c
+INNER JOIN address AS a ON a.address_id = c.address_id
+INNER JOIN city AS ci ON ci.city_id = a.city_id
+INNER JOIN country AS co ON co.country_id = ci.country_id
+--WHERE c.first_name = 'Mary' AND c.last_name = 'Smith'
+
+- (OUTER JOIN:)
+SELECT
+	f.title, f.release_year
+	, c.city AS store
+FROM film AS f
+LEFT JOIN inventory AS i ON i.film_id = f.film_id
+LEFT JOIN store AS s ON s.store_id = i.store_id
+LEFT JOIN address AS a ON a.address_id = s.address_id
+LEFT JOIN city AS c ON c.city_id = a.city_id
+WHERE f.title LIKE 'A%' --AND i.inventory_id IS NULL
+
+
+- (podzapytania skalarne:)
+SELECT
+	f.title
+	, f.rental_rate
+	, (SELECT AVG(rental_rate) FROM film) AS avg_price
+	, f.rental_rate - (SELECT AVG(rental_rate) FROM film) AS difference
+FROM film AS f
+WHERE f.rental_rate > (SELECT AVG(rental_rate) FROM film)
+
+
+
+
 
 
 
