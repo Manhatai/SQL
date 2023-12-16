@@ -327,6 +327,82 @@ Modyfikacja danych
 
 
 - (dodawanie rekordów - INSERT:)
+SELECT * FROM actor ORDER BY actor_id DESC
 
+--INSERT INTO actor
+--VALUES (201, 'Brad', 'Pitt', now())
+
+
+--INSERT INTO actor(first_name, last_name)
+--VALUES ('Amy', 'Adams')
+
+--INSERT INTO actor(first_name, last_name)
+--VALUES ('Harrison', 'Ford'), ('Angelina', 'Jolie')
+--RETURNING actor_id
+
+
+- (UPDATE:)
+SELECT * FROM actor WHERE actor_id = 208
+
+/*
+UPDATE actor
+	SET
+		first_name = 'Jolie',
+		last_name = 'Angelina'
+WHERE actor_id = 208
+*/
+
+/*
+SELECT *
+FROM actor
+WHERE actor_id IN
+	(SELECT
+		fa.actor_id
+	FROM film AS f
+	JOIN film_actor AS fa ON fa.film_id = f.film_id
+	WHERE f.film_id = 1)
+*/
+
+/*
+UPDATE actor
+	SET
+		first_name = UPPER(first_name),
+		last_name = UPPER(last_name)
+WHERE actor_id IN
+	(SELECT
+		fa.actor_id
+	FROM film AS f
+	JOIN film_actor AS fa ON fa.film_id = f.film_id
+	WHERE f.film_id = 1)
+*/
+
+
+SELECT * FROM actor
+
+
+
+- (DELETE:)
+--SELECT * FROM actor ORDER BY actor_id DESC
+--SELECT * FROM actor WHERE actor_id = 208
+
+--DELETE FROM actor WHERE actor_id=208
+
+/*
+SELECT * FROM actor WHERE actor_id IN
+	(SELECT
+		a.actor_id
+	FROM actor AS a
+	LEFT JOIN film_actor AS fa ON fa.actor_id = a.actor_id
+	WHERE fa.film_id IS NULL
+	ORDER BY fa.film_id)
+*/
+
+DELETE FROM actor WHERE actor_id IN
+	(SELECT
+		a.actor_id
+	FROM actor AS a
+	LEFT JOIN film_actor AS fa ON fa.actor_id = a.actor_id
+	WHERE fa.film_id IS NULL
+	ORDER BY fa.film_id)
 
 """
