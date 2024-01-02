@@ -405,4 +405,39 @@ DELETE FROM actor WHERE actor_id IN
 	WHERE fa.film_id IS NULL
 	ORDER BY fa.film_id)
 
+- (tworzenie tabel tymczasowych poleceniem SELECT)
+--SELECT *  INTO my_actor FROM actor
+--SELECT * FROM my_actor
+--DROP TABLE my_actor
+/*
+SELECT
+	a.first_name, a.last_name, COUNT(*)
+	INTO TEMPORARY temp_actor
+FROM actor a
+LEFT JOIN film_actor as fa ON fa.actor_id = a.actor_id
+GROUP BY a.first_name, a.last_name
+*/
+
+--SELECT * FROM temp_actor
+
+-- SELECT * INTO TEMP temp_actor2 FROM actor WHERE 1 = 0
+SELECT * FROM temp_actor2
+
+
+- (przepisywanie rekordów za pomocą INSERT INTO ... SELECT:)
+--SELECT * INTO TEMP temp_fa FROM film_actor;
+--SELECT * FROM temp_fa
+--INSERT INTO temp_fa
+--VALUES
+--	(1,1,NOW()),
+--	(2,2,NOW()),
+--	(3,3,NOW())
+
+INSERT INTO temp_fa
+SELECT * FROM film_actor;
+
+SELECT COUNT(*) FROM temp_fa;
+
+
+
 """
